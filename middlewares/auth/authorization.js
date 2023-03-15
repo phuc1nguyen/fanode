@@ -1,9 +1,16 @@
 const {PERMS} = require('../../constants');
+const {getRoleById} = require('../../repositories');
 
 function permissionRequired(permission) {
-  return function (req, res, next) {
+  return async function (req, res, next) {
     // TODO: Implement logic for getting user permissions
-    const userPermissions = [PERMS.People_List, PERMS.People_GetOne];
+    const {user} = req;
+    const userRole = await getRoleById(user.roleId);
+    const userPermissions = userRole.permissions;
+
+    console.log(user);
+    console.log(userRole);
+    console.log(userPermissions);
 
     const [resource] = permission.trim().split(':');
     const fullAccessPermission = `${resource}:FullAccess`;

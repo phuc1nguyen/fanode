@@ -3,14 +3,15 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 const {getAllPeopleController, loginController} = require('./controllers');
-const {authenticationRequired} = require('./middlewares');
+const {authenticationRequired, permissionRequired} = require('./middlewares');
 const {resFromError} = require('./utilities');
+const {PERMS} = require('./constants');
 
 app.use(express.json());
 app.use(cookieParser());
 
 app.post('/login', loginController);
-app.get('/people', authenticationRequired, getAllPeopleController);
+app.get('/people', authenticationRequired, permissionRequired(PERMS.People_List), getAllPeopleController);
 
 // Handling all errors
 app.use((err, req, res, next) => {
