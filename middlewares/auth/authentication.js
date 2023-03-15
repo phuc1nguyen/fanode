@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {getUserWithUsername} = require('../../repositories');
 
+// Read environment variable from process.env
 const {secret} = process.env;
 
 async function authenticationRequired(req, res, next) {

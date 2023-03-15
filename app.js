@@ -7,7 +7,9 @@ const {authenticationRequired, permissionRequired} = require('./middlewares');
 const {resFromError} = require('./utilities');
 const {PERMS} = require('./constants');
 
+// Use this middleware, so that we can access request body via req.body
 app.use(express.json());
+// Use this middleware, so that we can access cookies via req.cookies
 app.use(cookieParser());
 
 app.post('/login', loginController);
