@@ -1,5 +1,11 @@
-const {getUserWithUsername, generateSessionForUser, deleteSession} = require('../../repositories');
+const jwt = require('jsonwebtoken');
+const {getUserWithUsername} = require('../../repositories');
 const {resFromData} = require('../../utilities');
+
+// .env
+const {secret} = process.env;
+
+console.log(secret);
 
 async function loginController(req, res, next) {
   const {username, password} = req.body || {};
@@ -8,10 +14,8 @@ async function loginController(req, res, next) {
     // let hashedPassword = hash(password, secret, salt??);
     // hashedPassword === user.password
     if (password === user.password) {
-      const sessionId = await generateSessionForUser(username);
-      // Put Set-Cookie header
-      res.cookie('SESSIONID', sessionId, {httpOnly: true});
-      res.json(resFromData('OK!'));
+      const token = jwt.sign({username}, secret);
+      res.json(resFromData(token));
     } else {
       next(new Error('Wrong username or password!'));
     }
@@ -20,13 +24,4 @@ async function loginController(req, res, next) {
   }
 }
 
-async function logoutController(req, res, next) {
-  const {SESSIONID} = req.cookies || {};
-  // Delete session from database
-  await deleteSession(SESSIONID);
-  // Empty the Cookie on client side
-  res.cookie('SESSIONID', "", {httpOnly: true});
-  res.json(resFromData('OK!'));
-}
-
-module.exports = {loginController, logoutController};
+module.exports = {loginController};

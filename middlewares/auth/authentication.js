@@ -1,11 +1,14 @@
-const {checkSession} = require('../../repositories');
+const jwt = require('jsonwebtoken');
+
+const {secret} = process.env;
 
 async function authenticationRequired(req, res, next) {
-  const {SESSIONID} = req.cookies || {};
-  let authenticated = SESSIONID ? await checkSession(SESSIONID) : false;
-  if (authenticated) {
+  try {
+    const {authorization: token} = req.headers || {};
+    jwt.verify(token, secret);
     next();
-  } else {
+  } catch (err) {
+    console.error(err);
     next(new Error('You need to sign in to use this feature!'));
   }
 }
