@@ -1,20 +1,22 @@
-const path = require('node:path');
-const fs = require('node:fs/promises');
-const {nanoid} = require('nanoid');
+import path from 'node:path';
+import fs from 'node:fs/promises';
+import { nanoid } from 'nanoid';
+import { dirname } from '../../utils/dirname.js';
 
+const __dirname = dirname();
 const dbPath = path.join(__dirname, '../../mockdb', 'sessions.json');
 
 // Generate session ID, save it to database, return that ID
-async function generateSessionForUser(username) {
+export async function generateSessionForUser(username) {
   const jsonString = await fs.readFile(dbPath);
   const sessions = JSON.parse(jsonString);
   const newSessionId = nanoid();
-  const newSessions = [...sessions, {id: newSessionId, username}];
+  const newSessions = [...sessions, { id: newSessionId, username }];
   await fs.writeFile(dbPath, JSON.stringify(newSessions));
   return newSessionId;
 }
 
-async function checkSession(sessionId) {
+export async function checkSession(sessionId) {
   try {
     const jsonString = await fs.readFile(dbPath);
     const sessions = JSON.parse(jsonString);
@@ -22,7 +24,7 @@ async function checkSession(sessionId) {
     if (sessionIndex > -1) {
       return true;
     } else {
-      return false
+      return false;
     }
   } catch (err) {
     console.error(err);
@@ -30,7 +32,7 @@ async function checkSession(sessionId) {
   }
 }
 
-async function deleteSession(sessionId) {
+export async function deleteSession(sessionId) {
   const jsonString = await fs.readFile(dbPath);
   const sessions = JSON.parse(jsonString);
   const sessionIndex = sessions.findIndex((s) => s.id === sessionId);
@@ -38,5 +40,3 @@ async function deleteSession(sessionId) {
   await fs.writeFile(dbPath, JSON.stringify(sessions));
   return;
 }
-
-module.exports = {generateSessionForUser, checkSession, deleteSession};

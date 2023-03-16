@@ -1,12 +1,14 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+
 const app = express();
+import { getAllPeopleController, loginController } from './controllers/index.js';
+import { authenticationRequired, permissionRequired } from './middlewares/index.js';
+import { resFromError } from './utils/index.js';
+import { PERMS } from './constants/index.js';
 
-const {getAllPeopleController, loginController} = require('./controllers');
-const {authenticationRequired, permissionRequired} = require('./middlewares');
-const {resFromError} = require('./utilities');
-const {PERMS} = require('./constants');
-
+app.use(cors());
 // Use this middleware, so that we can access request body via req.body
 app.use(express.json());
 // Use this middleware, so that we can access cookies via req.cookies
@@ -20,4 +22,4 @@ app.use((err, req, res, next) => {
   res.json(resFromError(err));
 });
 
-module.exports = {app};
+export default app;

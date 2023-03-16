@@ -1,14 +1,12 @@
-const path = require('node:path');
-const fs = require('node:fs/promises');
+import path from 'node:path';
+import fs from 'node:fs/promises';
+import { dirname } from '../../utils/dirname.js';
 
+const __dirname = dirname();
 const dbPath = path.join(__dirname, '../../mockdb', 'roles.json');
 
-async function getRoleById(id) {
+export async function getRoleById(id) {
   const jsonString = await fs.readFile(dbPath);
   const roles = JSON.parse(jsonString);
   return roles.find((role) => role.id === id) || null;
 }
-
-module.exports = {getRoleById};
-
-

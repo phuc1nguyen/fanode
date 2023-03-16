@@ -1,10 +1,10 @@
-const {PERMS} = require('../../constants');
-const {getRoleById} = require('../../repositories');
+import { PERMS } from '../../constants/index.js';
+import { getRoleById } from '../../repositories/index.js';
 
-function permissionRequired(permission) {
+export function permissionRequired(permission) {
   return async function (req, res, next) {
     // TODO: Implement logic for getting user permissions
-    const {user} = req;
+    const { user } = req;
     const userRole = await getRoleById(user.roleId);
     const userPermissions = userRole.permissions;
 
@@ -28,5 +28,3 @@ function permissionRequired(permission) {
     }
   };
 }
-
-module.exports = {permissionRequired};
