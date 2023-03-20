@@ -14,12 +14,8 @@ export function permissionRequired(permission) {
     const [resource] = permission.trim().split(':');
     const fullAccessPermission = `${resource}:FullAccess`;
     let authorized = false;
-    for (const userPerm of userPermissions) {
-      if (userPerm === permission || userPerm === fullAccessPermission) {
-        authorized = true;
-        break;
-      }
-    }
+    authorized = userPermissions.includes(permission) || userPermissions.includes(fullAccessPermission);
+
     if (authorized) {
       next();
     } else {

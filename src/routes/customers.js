@@ -1,5 +1,4 @@
 import express from 'express';
-// import { customerController } from '../controllers/index.js';
 import * as customerController from '../controllers/customerController.js';
 
 const router = express.Router();

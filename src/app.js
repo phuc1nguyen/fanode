@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import { Model } from 'objection';
 import myKnex from '../database/index.js';
 
-import { employeesRouter, customersRouter } from './routes/index.js';
+import { employeesRouter, customersRouter, usersRouter } from './routes/index.js';
 import { getAllPeopleController, loginController } from './controllers/index.js';
 import { authenticationRequired, permissionRequired } from './middlewares/index.js';
 import { resFromError } from './utils/index.js';
@@ -27,6 +27,7 @@ app.use(cors());
 app.use(morgan('dev', { skip: (req, res) => res.statusCode < 400 }));
 app.use('/customers', customersRouter);
 app.use('/employees', employeesRouter);
+app.use('/users', usersRouter);
 
 app.get('/', function (req, res) {
   res.end('Homepage');
