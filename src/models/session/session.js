@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { dirname } from '../../utils/dirname.js';
 
 const __dirname = dirname();
-const dbPath = path.join(__dirname, '../../mockdb', 'sessions.json');
+const dbPath = path.join(__dirname, '../../database', 'sessions.json');
 
 // Generate session ID, save it to database, return that ID
 export async function generateSessionForUser(username) {

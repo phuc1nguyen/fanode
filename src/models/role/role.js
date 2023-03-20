@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import { dirname } from '../../utils/dirname.js';
 
 const __dirname = dirname();
-const dbPath = path.join(__dirname, '../../mockdb', 'roles.json');
+const dbPath = path.join(__dirname, '../../database', 'roles.json');
 
 export async function getRoleById(id) {
   const jsonString = await fs.readFile(dbPath);

@@ -1,5 +1,4 @@
-import { PERMS } from '../../constants/index.js';
-import { getRoleById } from '../../repositories/index.js';
+import { getRoleById } from '../../models/index.js';
 
 export function permissionRequired(permission) {
   return async function (req, res, next) {

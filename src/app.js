@@ -1,23 +1,40 @@
+import * as dotenv from 'dotenv';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import morgan from 'morgan';
+import { Model } from 'objection';
+import myKnex from '../database/index.js';
 
-const app = express();
+import { employeesRouter, customersRouter } from './routes/index.js';
 import { getAllPeopleController, loginController } from './controllers/index.js';
 import { authenticationRequired, permissionRequired } from './middlewares/index.js';
 import { resFromError } from './utils/index.js';
 import { PERMS } from './constants/index.js';
 
-app.use(cors());
-// Use this middleware, so that we can access request body via req.body
-app.use(express.json());
-// Use this middleware, so that we can access cookies via req.cookies
-app.use(cookieParser());
+dotenv.config();
+// bind all Models to the knex instance
+Model.knex(myKnex);
 
+const app = express();
+// access request body via req.body
+app.use(express.json());
+// access cookie via req.cookies
+app.use(cookieParser());
+// enable CORS, add CORS config later
+app.use(cors());
+// log only 4xx and 5xx responses to the console
+app.use(morgan('dev', { skip: (req, res) => res.statusCode < 400 }));
+app.use('/customers', customersRouter);
+app.use('/employees', employeesRouter);
+
+app.get('/', function (req, res) {
+  res.end('Homepage');
+});
 app.post('/login', loginController);
 app.get('/people', authenticationRequired, permissionRequired(PERMS.People_List), getAllPeopleController);
 
-// Handling all errors
+// handling all errors
 app.use((err, req, res, next) => {
   res.json(resFromError(err));
 });

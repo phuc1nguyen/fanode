@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { getUserWithUsername } from '../../repositories/index.js';
+import { getUserWithUsername } from '../../models/index.js';
 
 // Read environment variable from process.env
 const { secret } = process.env;
