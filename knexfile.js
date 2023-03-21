@@ -8,14 +8,13 @@ export default {
   development: {
     ...config.database,
     migrations: {
-      tableName: 'knex_migrations',
+      tableName: 'migrations',
       directory: 'database/migrations',
     },
     seeds: {
       directory: 'database/seeds',
     },
   },
-
   production: {
     ...config.database,
     pool: {
@@ -23,7 +22,7 @@ export default {
       max: 10,
     },
     migrations: {
-      tableName: 'knex_migrations',
+      tableName: 'migrations',
     },
   },
 };

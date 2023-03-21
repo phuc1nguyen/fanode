@@ -1,8 +1,8 @@
 import express from 'express';
+import * as employeeController from '../controllers/employeeController.js';
+
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-  res.send('Respond with a resource');
-});
+router.get('/', employeeController.index);
 
 export default router;

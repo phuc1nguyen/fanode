@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { dirname } from '../../utils/dirname.js';
+import { dirname } from '../../utilities/dirname.js';
 
 const __dirname = dirname();
 const dbPath = path.join(__dirname, '../../database', 'roles.json');

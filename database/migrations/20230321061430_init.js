@@ -17,7 +17,7 @@ export async function up(knex) {
         table.timestamps(true, true);
       })
       .createTable('customers', (table) => {
-        table.increments('customerNumber').primary();
+        table.integer('customerNumber').primary();
         table.string('customerName', 50).notNullable().index();
         table.string('contactLastName', 50).notNullable();
         table.string('contactFirstName', 50).notNullable();
@@ -36,10 +36,11 @@ export async function up(knex) {
         table.string('username', 20).notNullable().primary();
         table.string('password', 100).notNullable();
         table.integer('employeeNumber').notNullable().unsigned().references('employeeNumber').inTable('employees');
+        table.timestamps(true, true);
       });
     console.log('Create tables successfully');
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }
 
@@ -49,8 +50,10 @@ export async function up(knex) {
  */
 export async function down(knex) {
   try {
-    await knex.schema.table('customers', (table) => table.dropForeign('salesRepEmployeeNumber'));
-    await knex.schema.table('users', (table) => table.dropForeign('employeeNumber'));
+    await Promise.all([
+      knex.schema.table('customers', (table) => table.dropForeign('salesRepEmployeeNumber')),
+      knex.schema.table('users', (table) => table.dropForeign('employeeNumber')),
+    ]);
     await knex.schema.dropTable('employees').dropTable('customers').dropTable('users');
     console.log('Drop tables successfully');
   } catch (err) {

@@ -9,7 +9,8 @@ import myKnex from '../database/index.js';
 import { employeesRouter, customersRouter, usersRouter } from './routes/index.js';
 import { getAllPeopleController, loginController } from './controllers/index.js';
 import { authenticationRequired, permissionRequired } from './middlewares/index.js';
-import { resFromError } from './utils/index.js';
+import config from '../config/config.js';
+import { resFromError } from './utilities/index.js';
 import { PERMS } from './constants/index.js';
 
 dotenv.config();
@@ -23,12 +24,11 @@ app.use(express.json());
 app.use(cookieParser());
 // enable CORS, add CORS config later
 app.use(cors());
-// log only 4xx and 5xx responses to the console
-app.use(morgan('dev', { skip: (req, res) => res.statusCode < 400 }));
+// log only 4xx and 5xx (error) responses to the console
+app.use(morgan(`${config.app.ENV === 'development' ? 'dev' : 'common'}`, { skip: (req, res) => res.statusCode < 400 }));
 app.use('/customers', customersRouter);
 app.use('/employees', employeesRouter);
 app.use('/users', usersRouter);
-
 app.get('/', function (req, res) {
   res.end('Homepage');
 });

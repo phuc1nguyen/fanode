@@ -1,19 +1,9 @@
 import Customer from '../models/Customer.js';
 
 export async function index(req, res) {
-  await Customer.query().delete();
+  const customers = await Customer.query();
 
-  // Insert one row to the database.
-  await Customer.query().insert({
-    firstName: 'Jennifer',
-    lastName: 'Aniston',
-  });
-
-  // Read all rows from the db.
-  const customer = await Customer.query();
-
-  res.json(customer);
-  console.log(customer);
+  res.json(customers);
 }
 
 export function detail(req, res) {

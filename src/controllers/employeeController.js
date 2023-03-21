@@ -1,7 +1,9 @@
 import Employee from '../models/Employee.js';
 
-export function index(req, res) {
-  res.send('List all employees');
+export async function index(req, res) {
+  const employees = await Employee.query();
+
+  res.json(employees);
 }
 
 export function detail(req, res) {

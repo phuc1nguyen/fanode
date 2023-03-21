@@ -1,7 +1,7 @@
 import app from './app.js';
 import config from '../config/config.js';
 
-(async function () {
+(function () {
   const PORT = config.app.PORT;
 
   app.listen(PORT, () => {

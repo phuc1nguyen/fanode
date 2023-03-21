@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { getUserWithUsername } from '../../models/index.js';
-import { resFromData } from '../../utils/index.js';
+import { resFromData } from '../../utilities/index.js';
 
 const secret = process.env.SECRET;
 
