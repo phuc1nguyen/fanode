@@ -1,5 +1,5 @@
-import employeesRouter from './employees.js';
-import customersRouter from './customers.js';
-import usersRouter from './users.js';
+import employeesRouter from './employeeRoutes.js';
+import customersRouter from './customerRoutes.js';
+import usersRouter from './userRoutes.js';
 
 export { employeesRouter, customersRouter, usersRouter };
