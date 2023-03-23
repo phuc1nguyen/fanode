@@ -1,22 +1,26 @@
-import Employee from '../models/Employee.js';
+import * as employeeServices from '../services/employeeServices.js';
 
 export async function index(req, res) {
-  const employees = await Employee.query();
-
-  res.json(employees);
+  const employees = await employeeServices.getAllEmployees();
+  res.status(200).json(employees);
 }
 
-export function detail(req, res) {
-  const { id } = req.params;
-  res.send(`Display employee detail with employee id: ${id}`);
+export async function store(req, res) {
+  await employeeServices.insertEmployee(req.body);
+  res.status(201).json({ message: 'Employee created successfully' });
 }
 
-export function create(req, res) {}
+export async function detail(req, res) {
+  const employee = await employeeServices.getEmployeeById(req.params.employeeNumber);
+  res.status(200).json(employee);
+}
 
-export function store(req, res) {}
+export async function update(req, res) {
+  await employeeServices.updateEmployeeById(req.params.employeeNumber, req.body);
+  res.status(200).json({ message: 'Employee updated successfully' });
+}
 
-export function edit(req, res) {}
-
-export function update(req, res) {}
-
-export function destroy(req, res) {}
+export async function destroy(req, res) {
+  await employeeServices.destroyEmployee(req.params.employeeNumber);
+  res.status(200).json({ message: 'Employee deleted successfully' });
+}

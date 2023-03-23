@@ -1,32 +1,26 @@
-import Customer from '../models/Customer.js';
+import * as customerServices from '../services/customerServices.js';
 
 export async function index(req, res) {
-  const customers = await Customer.query();
-
-  res.json(customers);
+  const customers = await customerServices.getAllCustomers();
+  res.status(200).json(customers);
 }
 
-export function detail(req, res) {
-  const { id } = req.params;
-  res.send(`Display customer detail with customer id: ${id}`);
+export async function store(req, res) {
+  await customerServices.insertCustomer(req.body);
+  res.status(201).json({ message: 'Customer created successfully' });
 }
 
-export function create(req, res) {
-  res.send('Create customer');
+export async function detail(req, res) {
+  const customer = await customerServices.getCustomerById(req.params.customerNumber);
+  res.status(200).json(customer);
 }
 
-export function store(req, res) {
-  res.send('Store customer');
+export async function update(req, res) {
+  await customerServices.updateCustomerById(req.params.customerNumber, req.body);
+  res.status(201).json({ message: 'Customer updated successfully' });
 }
 
-export function edit(req, res) {
-  res.send(`Edit customer ${req.params.id}`);
-}
-
-export function update(req, res) {
-  res.send(`Update customer ${req.params.id}`);
-}
-
-export function destroy(req, res) {
-  res.send(`Delete customer ${req.params.id}`);
+export async function destroy(req, res) {
+  await customerServices.destroyCustomer(req.params.customerNumber);
+  res.status(200).json({ message: 'Customer deleted successfully' });
 }

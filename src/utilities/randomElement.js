@@ -1,4 +1,4 @@
-export default function getRandomItem(arr, type) {
+export default function getRandomElement(arr, type) {
   const randomIdx = Math.floor(Math.random() * arr.length);
   if (type === 'jobTitle') return arr[randomIdx].title;
   if (type === 'officeCode') return arr[randomIdx].code;
