@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import Customer from './Customer.js';
+import User from './User.js';
 
 class Employee extends Model {
   static get tableName() {
@@ -10,6 +11,10 @@ class Employee extends Model {
     return 'employeeNumber';
   }
 
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
   static get relationMappings() {
     return {
       customers: {
@@ -18,6 +23,14 @@ class Employee extends Model {
         join: {
           from: 'employees.employeeNumber',
           to: 'customers.salesRepEmployeeNumber',
+        },
+      },
+      user: {
+        relations: Model.HasOneRelation,
+        modelClass: User,
+        join: {
+          from: 'employees.employeeNumber',
+          to: 'users.employeeNumber',
         },
       },
     };
