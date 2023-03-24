@@ -8,14 +8,10 @@ export function getCustomerById(id) {
   return Customer.query().findById(id);
 }
 
-export function insertCustomer(customer) {
-  return Customer.query().insert(customer);
-}
-
-export async function updateCustomerById(id, updatedFields) {
+export function updateCustomerById(id, updatedFields) {
   return Customer.query().findById(id).patch(updatedFields);
 }
 
 export function destroyCustomer(id) {
-  return Customer.query().deleteById(id);
+  return Customer.query().delete().where('id', id);
 }

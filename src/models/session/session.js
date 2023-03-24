@@ -21,11 +21,8 @@ export async function checkSession(sessionId) {
     const jsonString = await fs.readFile(dbPath);
     const sessions = JSON.parse(jsonString);
     const sessionIndex = sessions.findIndex((s) => s.id === sessionId);
-    if (sessionIndex > -1) {
-      return true;
-    } else {
-      return false;
-    }
+
+    return sessionIndex > -1;
   } catch (err) {
     console.error(err);
     return false;

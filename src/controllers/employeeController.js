@@ -1,26 +1,43 @@
 import * as employeeServices from '../services/employeeServices.js';
 
-export async function index(req, res) {
-  const employees = await employeeServices.getAllEmployees();
-  res.status(200).json(employees);
+export async function index(req, res, next) {
+  try {
+    const employees = await employeeServices.getAllEmployees();
+    if (!employees) {
+      return next('Employees not found');
+    }
+    res.status(200).json(employees);
+  } catch (err) {
+    next(err);
+  }
 }
 
-export async function store(req, res) {
-  await employeeServices.insertEmployee(req.body);
-  res.status(201).json({ message: 'Employee created successfully' });
+export async function detail(req, res, next) {
+  try {
+    const employee = await employeeServices.getEmployeeById(req.params.employeeNumber);
+    if (!employee) {
+      return next('Employee not found');
+    }
+    res.status(200).json(employee);
+  } catch (err) {
+    next(err);
+  }
 }
 
-export async function detail(req, res) {
-  const employee = await employeeServices.getEmployeeById(req.params.employeeNumber);
-  res.status(200).json(employee);
+export async function update(req, res, next) {
+  try {
+    await employeeServices.updateEmployeeById(req.params.employeeNumber, req.body);
+    res.status(200).json({ message: 'Employee updated successfully' });
+  } catch (err) {
+    next(err);
+  }
 }
 
-export async function update(req, res) {
-  await employeeServices.updateEmployeeById(req.params.employeeNumber, req.body);
-  res.status(200).json({ message: 'Employee updated successfully' });
-}
-
-export async function destroy(req, res) {
-  await employeeServices.destroyEmployee(req.params.employeeNumber);
-  res.status(200).json({ message: 'Employee deleted successfully' });
+export async function destroy(req, res, next) {
+  try {
+    await employeeServices.destroyEmployee(req.params.employeeNumber);
+    res.status(200).json({ message: 'Employee deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
 }

@@ -26,8 +26,8 @@ app.use(cookieParser());
 app.use(cors());
 // log only 4xx and 5xx (error) responses to the console
 app.use(morgan(`${config.app.ENV === 'development' ? 'dev' : 'common'}`, { skip: (req, res) => res.statusCode < 400 }));
-app.use('/customers', customersRouter);
 app.use('/employees', employeesRouter);
+app.use('/customers', customersRouter);
 app.use('/users', usersRouter);
 app.get('/', function (req, res) {
   res.end('Homepage');
