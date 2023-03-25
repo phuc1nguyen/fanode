@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import jobTitles from '../src/constants/jobTitles.js';
 import offices from '../src/constants/offices.js';
-import getRandomElement from '../src/utilities/getRandomElement.js';
+import getRandomElement from '../src/utilities/randomElement.js';
 
 export const employees = Array.from({ length: 5 }, function (element, index) {
   return {
