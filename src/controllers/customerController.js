@@ -1,10 +1,10 @@
-import * as customerServices from '../services/customerServices.js';
+import { customerServices } from '../services/index.js';
 
 export async function index(req, res, next) {
   try {
     const customers = await customerServices.getAllCustomers();
     if (!customers) {
-      return next('Customers not found');
+      return next(new Error('Customers not found'));
     }
     res.status(200).json(customers);
   } catch (err) {
@@ -16,9 +16,9 @@ export async function detail(req, res, next) {
   try {
     const customer = await customerServices.getCustomerById(req.params.customerNumber);
     if (!customer) {
-      next('Customer not found');
+      next(new Error('Customer not found'));
     }
-    res.status(300).json(customer);
+    res.status(200).json(customer);
   } catch (err) {
     next(err);
   }

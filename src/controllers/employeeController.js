@@ -1,10 +1,10 @@
-import * as employeeServices from '../services/employeeServices.js';
+import { employeeServices } from '../services/index.js';
 
 export async function index(req, res, next) {
   try {
     const employees = await employeeServices.getAllEmployees();
     if (!employees) {
-      return next('Employees not found');
+      return next(new Error('Employees not found'));
     }
     res.status(200).json(employees);
   } catch (err) {
@@ -16,7 +16,7 @@ export async function detail(req, res, next) {
   try {
     const employee = await employeeServices.getEmployeeById(req.params.employeeNumber);
     if (!employee) {
-      return next('Employee not found');
+      return next(new Error('Employee not found'));
     }
     res.status(200).json(employee);
   } catch (err) {

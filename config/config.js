@@ -4,8 +4,9 @@ dotenv.config();
 
 const config = {
   app: {
-    ENV: process.env.NODE_ENV || 'development',
-    PORT: process.env.PORT || 3000,
+    nodeEnv: process.env.NODE_ENV || 'development',
+    port: process.env.PORT || 3000,
+    jwtSecret: process.env.JWT_SECRET || '',
   },
   database: {
     client: 'pg',
@@ -18,5 +19,9 @@ const config = {
     },
   },
 };
+
+Object.entries(config.database.connection).forEach(([name, value]) => {
+  if (!value) throw new Error(`Missing config value for ${name}`);
+});
 
 export default config;
