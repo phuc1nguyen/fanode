@@ -35,7 +35,14 @@ export async function up(knex) {
       .createTable('users', (table) => {
         table.string('username', 20).notNullable().primary();
         table.string('password', 100).notNullable();
-        table.integer('employeeNumber').notNullable().unsigned().references('employeeNumber').inTable('employees');
+        table
+          .integer('employeeNumber')
+          .notNullable()
+          .unsigned()
+          .references('employeeNumber')
+          .inTable('employees')
+          .onUpdate('cascade')
+          .onDelete('cascade');
         table.timestamps(true, true);
       });
     console.log('Create tables successfully');

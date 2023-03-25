@@ -13,7 +13,6 @@ export async function seed(knex) {
     // Inserts data
     await knex('employees').insert(mockData.employees);
     await knex('customers').insert(mockData.customers);
-    // await knex('users').insert(mockData.users);
     console.log('Data has been created successfully');
   } catch (err) {
     console.error(err);
