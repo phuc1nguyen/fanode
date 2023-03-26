@@ -13,5 +13,9 @@ export function updateEmployeeById(id, updatedFields) {
 }
 
 export function destroyEmployee(id) {
-  return Employee.query().delete().where('id', id);
+  return Employee.query().delete().where('employeeNumber', id);
+}
+
+export function checkEmployeeAccount(employeeNumber) {
+  return Employee.relatedQuery('user').for(employeeNumber).first();
 }

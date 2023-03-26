@@ -29,6 +29,7 @@ app.use(cors());
 app.use(
   morgan(`${config.app.nodeEnv === 'development' ? 'dev' : 'common'}`, { skip: (req, res) => res.statusCode < 400 }),
 );
+// TODO: refactor routing code (issue #4)
 app.use('/employees', authenticate, employeesRouter);
 app.use('/customers', authenticate, customersRouter);
 app.use('/users', usersRouter);

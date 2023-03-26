@@ -13,5 +13,5 @@ export function updateCustomerById(id, updatedFields) {
 }
 
 export function destroyCustomer(id) {
-  return Customer.query().delete().where('id', id);
+  return Customer.query().delete().where('customerNumber', id);
 }

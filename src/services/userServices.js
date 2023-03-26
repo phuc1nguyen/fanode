@@ -16,7 +16,7 @@ export function insertUserByEmployeeNumber(newUser) {
     username,
     password,
     employeeNumber,
-    roleId: employeeNumber === 1 ? 1 : 4,
+    roleId: +employeeNumber === 1 ? 1 : 4,
   });
 }
 

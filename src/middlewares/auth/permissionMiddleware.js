@@ -4,6 +4,7 @@ export function permissionRequired(permission) {
   return async function (req, res, next) {
     const user = req.user;
     const userRole = await userServices.getUserRole(user.username);
+    // TODO: implement checking user role (userRole.name), if it's `Staff` or `Leader` -> additional condition
     if (!userRole) {
       return next(new Error('This user does not have any role'));
     }
