@@ -18,7 +18,7 @@ class Employee extends Model {
   static get relationMappings() {
     return {
       customers: {
-        relations: Model.HasManyRelation,
+        relation: Model.HasManyRelation,
         modelClass: Customer,
         join: {
           from: 'employees.employeeNumber',
@@ -26,7 +26,7 @@ class Employee extends Model {
         },
       },
       user: {
-        relations: Model.HasOneRelation,
+        relation: Model.HasOneRelation,
         modelClass: User,
         join: {
           from: 'employees.employeeNumber',

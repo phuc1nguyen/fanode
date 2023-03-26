@@ -11,6 +11,9 @@ export async function authenticate(req, res, next) {
     const decoded = jwt.verify(bearerToken, secret);
     const { username } = decoded;
     const user = await getUserByUsername(username);
+    if (!user) {
+      return next(new Error('User does not exist'));
+    }
     req.user = user;
     next();
   } catch (err) {

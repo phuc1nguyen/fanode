@@ -1,10 +1,12 @@
-import { getRoleById } from '../../models/index.js';
+import { userServices } from '../../services/index.js';
 
 export function permissionRequired(permission) {
+  console.log(permission);
   return async function (req, res, next) {
     // TODO: Implement logic for getting user permissions
-    const { user } = req;
-    const userRole = await getRoleById(user.roleId);
+    const user = req.user;
+    console.log(user);
+    const userRole = await userServices.getUserRole(user.username);
     const userPermissions = userRole.permissions;
 
     console.log(user);
@@ -17,9 +19,13 @@ export function permissionRequired(permission) {
     authorized = userPermissions.includes(permission) || userPermissions.includes(fullAccessPermission);
 
     if (authorized) {
-      next();
+      return next();
     } else {
-      next(new Error('You are not authorized to perform this action!'));
+      return next(new Error('You are not authorized to perform this action!'));
     }
   };
+}
+
+export function roleRequired(role) {
+  return async function (req, res, next) {};
 }

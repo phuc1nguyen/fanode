@@ -13,7 +13,7 @@ class Customer extends Model {
   static get relationMappings() {
     return {
       employees: {
-        relations: Model.BelongsToOneRelation,
+        relation: Model.BelongsToOneRelation,
         modelClass: Employee,
         join: {
           from: 'customers.salesRepEmployeeNumber',

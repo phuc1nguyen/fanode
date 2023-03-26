@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import Employee from './Employee.js';
+import Role from './Role.js';
 
 class User extends Model {
   static get tableName() {
@@ -13,11 +14,19 @@ class User extends Model {
   static get relationMappings() {
     return {
       employee: {
-        relations: Model.BelongsToOneRelation,
+        relation: Model.BelongsToOneRelation,
         modelClass: Employee,
         join: {
           from: 'users.employeeNumber',
           to: 'employees.employeeNumber',
+        },
+      },
+      role: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Role,
+        join: {
+          from: 'users.roleId',
+          to: 'roles.id',
         },
       },
     };

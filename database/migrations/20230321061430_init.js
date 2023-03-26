@@ -33,7 +33,7 @@ export async function up(knex) {
         table.timestamps(true, true);
       })
       .createTable('users', (table) => {
-        table.string('username', 20).notNullable().primary();
+        table.string('username', 20).notNullable().unique().primary();
         table.string('password', 100).notNullable();
         table
           .integer('employeeNumber')

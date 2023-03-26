@@ -1,6 +1,6 @@
 import Employee from '../models/Employee.js';
 
-export async function getAllEmployees() {
+export async function getEmployees() {
   return Employee.query();
 }
 

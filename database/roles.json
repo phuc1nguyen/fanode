@@ -1,4 +1,0 @@
-[
-  {"id": "0", "name": "getone", "permissions": ["People:GetOne"]},
-  {"id": "1", "name": "viewer", "permissions": ["People:GetOne", "People:List"]}
-]

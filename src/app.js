@@ -7,11 +7,10 @@ import { Model } from 'objection';
 import myKnex from '../database/index.js';
 
 import { employeesRouter, customersRouter, usersRouter } from './routes/index.js';
-import { getAllPeopleController } from './controllers/index.js';
-import { authenticate, permissionRequired } from './middlewares/index.js';
+import { authenticate } from './middlewares/index.js';
 import config from '../config/config.js';
 import { resFromError } from './utilities/index.js';
-import { PERMS } from './constants/index.js';
+import PERMISSIONS from './constants/permissions.js';
 
 dotenv.config();
 // bind all Objection Models to the knex instance
@@ -36,7 +35,6 @@ app.use('/users', usersRouter);
 app.get('/', function (req, res) {
   res.end('Homepage');
 });
-app.get('/people', authenticate, permissionRequired(PERMS.People_List), getAllPeopleController);
 
 // handling all errors
 app.use((err, req, res, next) => {

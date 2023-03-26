@@ -2,7 +2,7 @@ import { customerServices } from '../services/index.js';
 
 export async function index(req, res, next) {
   try {
-    const customers = await customerServices.getAllCustomers();
+    const customers = await customerServices.getCustomers();
     if (!customers) {
       return next(new Error('Customers not found'));
     }

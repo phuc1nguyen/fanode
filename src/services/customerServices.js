@@ -1,6 +1,6 @@
 import Customer from '../models/Customer.js';
 
-export function getAllCustomers() {
+export function getCustomers() {
   return Customer.query();
 }
 
