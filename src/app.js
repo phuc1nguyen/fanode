@@ -7,8 +7,8 @@ import { Model } from 'objection';
 import myKnex from '../database/index.js';
 
 import { employeesRouter, customersRouter, usersRouter } from './routes/index.js';
-import { getAllPeopleController, authController, loginController } from './controllers/index.js';
-import { authenticationRequired, permissionRequired } from './middlewares/index.js';
+import { getAllPeopleController } from './controllers/index.js';
+import { authenticate, permissionRequired } from './middlewares/index.js';
 import config from '../config/config.js';
 import { resFromError } from './utilities/index.js';
 import { PERMS } from './constants/index.js';
@@ -30,13 +30,13 @@ app.use(cors());
 app.use(
   morgan(`${config.app.nodeEnv === 'development' ? 'dev' : 'common'}`, { skip: (req, res) => res.statusCode < 400 }),
 );
-app.use('/employees', employeesRouter);
-app.use('/customers', customersRouter);
+app.use('/employees', authenticate, employeesRouter);
+app.use('/customers', authenticate, customersRouter);
 app.use('/users', usersRouter);
 app.get('/', function (req, res) {
   res.end('Homepage');
 });
-app.get('/people', authenticationRequired, permissionRequired(PERMS.People_List), getAllPeopleController);
+app.get('/people', authenticate, permissionRequired(PERMS.People_List), getAllPeopleController);
 
 // handling all errors
 app.use((err, req, res, next) => {

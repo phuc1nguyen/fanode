@@ -5,6 +5,7 @@ export function getAllUsers() {
 }
 
 export function getUserByUsername(username) {
+  if (!username) throw new Error('Please request with a username');
   return User.query().where('username', username).first();
 }
 
