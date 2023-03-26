@@ -4,7 +4,6 @@ import { userController, authController } from '../controllers/index.js';
 const router = express.Router();
 
 router.get('/', userController.index);
-router.get('/:username/roles', userController.getRole);
 router.delete('/:username', userController.destroy);
 
 router.post('/login', authController.login);

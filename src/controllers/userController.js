@@ -20,14 +20,3 @@ export async function destroy(req, res, next) {
     next(err);
   }
 }
-
-export async function getRole(req, res, next) {
-  const username = req.params.username;
-
-  try {
-    const roles = await userServices.getUserRole(username);
-    res.status(200).json(roles);
-  } catch (err) {
-    next(err);
-  }
-}

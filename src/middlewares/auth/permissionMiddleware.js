@@ -1,17 +1,13 @@
 import { userServices } from '../../services/index.js';
 
 export function permissionRequired(permission) {
-  console.log(permission);
   return async function (req, res, next) {
-    // TODO: Implement logic for getting user permissions
     const user = req.user;
-    console.log(user);
     const userRole = await userServices.getUserRole(user.username);
+    if (!userRole) {
+      return next(new Error('This user does not have any role'));
+    }
     const userPermissions = userRole.permissions;
-
-    console.log(user);
-    console.log(userRole);
-    console.log(userPermissions);
 
     const [resource] = permission.trim().split(':');
     const fullAccessPermission = `${resource}:FullAccess`;
@@ -24,8 +20,4 @@ export function permissionRequired(permission) {
       return next(new Error('You are not authorized to perform this action!'));
     }
   };
-}
-
-export function roleRequired(role) {
-  return async function (req, res, next) {};
 }
