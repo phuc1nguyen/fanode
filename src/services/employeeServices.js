@@ -19,3 +19,7 @@ export function destroyEmployee(id) {
 export function checkEmployeeAccount(employeeNumber) {
   return Employee.relatedQuery('user').for(employeeNumber).first();
 }
+
+export function getOwnedCustomersById(employeeNumber) {
+  return Employee.relatedQuery('customers').for(employeeNumber);
+}

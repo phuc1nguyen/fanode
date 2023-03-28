@@ -32,8 +32,8 @@ export async function register(req, res, next) {
 
   try {
     const employee = await employeeServices.getEmployeeById(employeeNumber);
-    const existedUser = await employeeServices.checkEmployeeAccount(employeeNumber);
-    if (existedUser) {
+    const existedAccount = await employeeServices.checkEmployeeAccount(employeeNumber);
+    if (existedAccount) {
       return next(new Error('Employee account had been created'));
     }
 
