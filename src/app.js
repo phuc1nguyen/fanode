@@ -3,6 +3,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import { errors } from 'celebrate';
 import { Model } from 'objection';
 import myKnex from '../database/index.js';
 
@@ -10,7 +11,6 @@ import { employeesRouter, customersRouter, usersRouter } from './routes/index.js
 import { authenticate } from './middlewares/index.js';
 import config from '../config/config.js';
 import { resFromError } from './utilities/index.js';
-import PERMISSIONS from './constants/permissions.js';
 
 dotenv.config();
 // bind all Objection Models to the knex instance
@@ -37,7 +37,9 @@ app.get('/', function (req, res) {
   res.end('Homepage');
 });
 
-// handling all errors
+// handle celebrate errors
+app.use(errors());
+// handle all errors
 app.use((err, req, res, next) => {
   res.json(resFromError(err));
 });
